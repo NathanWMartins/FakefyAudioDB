@@ -41,8 +41,8 @@ O sistema permite ao usuário:
 
 ```bash
 # Clone o repositório
-git clone https://github.com/SeuUsuario/fakefy.git
-cd fakefy
+git clone https://github.com/NathanWMartins/FakefyAudioDB
+cd fakefy-app
 
 # Instale as dependências
 npm install
