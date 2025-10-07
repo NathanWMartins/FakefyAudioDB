@@ -73,14 +73,6 @@ const ARTISTS: string[] = [
     "Maroon 5", "Eminem", "Lady Gaga", "Shakira", "Katy Perry", "U2"
 ];
 
-export const loadTop10ByArtist = createAsyncThunk("song/loadTop10ByArtist", async (artist: string) => {
-    const res = await fetch(`${BASE}/track-top10.php?s=${encodeURIComponent(artist)}`);
-    if (!res.ok) throw new Error("Top 10 request failed");
-    const json = await res.json();
-    const arr = (json?.track ?? []) as any[];
-    return arr.map(mapTrack) as Track[];
-});
-
 export const loadPopularFromArtists = createAsyncThunk("song/loadPopularFromArtists", async () => {
     const settled = await Promise.allSettled(
         ARTISTS.map(a => fetch(`${BASE}/track-top10.php?s=${encodeURIComponent(a)}`).then(r => r.json()))
@@ -101,6 +93,14 @@ export const loadPopularFromArtists = createAsyncThunk("song/loadPopularFromArti
 
     scored.sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
     return scored.slice(0, 100);
+});
+
+export const loadTop10ByArtist = createAsyncThunk("song/loadTop10ByArtist", async (artist: string) => {
+    const res = await fetch(`${BASE}/track-top10.php?s=${encodeURIComponent(artist)}`);
+    if (!res.ok) throw new Error("Top 10 request failed");
+    const json = await res.json();
+    const arr = (json?.track ?? []) as any[];
+    return arr.map(mapTrack) as Track[];
 });
 
 export const searchTracks = createAsyncThunk(

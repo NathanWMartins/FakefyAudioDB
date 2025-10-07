@@ -23,21 +23,15 @@ export default function LoginDialog({ open, onClose }: Props) {
     const [loading, setLoading] = useState(false);
     const [err, setErr] = useState<string | null>(null);
 
-    const emailValid = /^\S+@\S+\.\S+$/.test(email);
-    const passValid = password.length >= 6;
-
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         setErr(null);
-
-        if (!emailValid) { setErr("Invalid email"); return; }
-        if (!passValid) { setErr("Password must have at least 6 characters"); return; }
 
         setLoading(true);
         try {
             dispatch(login({ email, senha: password }));
             onClose();
-            nav("/home/user"); // ou /home, como preferir
+            nav("/home/user");
         } catch (ex: any) {
             setErr(ex?.message ?? "Authentication failed");
         } finally {
@@ -78,7 +72,6 @@ export default function LoginDialog({ open, onClose }: Props) {
                         autoFocus
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        error={!!err && !emailValid}
                     />
 
                     <TextField
@@ -89,7 +82,6 @@ export default function LoginDialog({ open, onClose }: Props) {
                         inputProps={{ minLength: 6 }}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        error={!!err && !passValid}
                     />
                 </DialogContent>
 
