@@ -4,6 +4,7 @@ import { Box, Container, Typography, Paper, Stack, Button, Chip } from "@mui/mat
 import { setLastPlaylist } from "../redux/userSlice";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import Header from "../components/UserHeader";
+import WavingHandIcon from "@mui/icons-material/WavingHand";
 
 export default function UserHome() {
     const session = useSelector((s: RootState) => s.user.session);
@@ -29,9 +30,19 @@ export default function UserHome() {
             <Container maxWidth="md" sx={{ flex: 1, py: 4 }}>
                 {/* Boas-vindas */}
                 <Box sx={{ mb: 4, textAlign: "center" }}>
-                    <Typography variant="h4" sx={{ fontWeight: 800 }}>
-                        Welcome, {session?.email?.split("@")[0] ?? "user"} 👋
-                    </Typography>
+                    <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="center"
+                        spacing={1}
+                        sx={{ mb: 0.5 }}
+                    >
+                        <Typography variant="h4" sx={{ fontWeight: 800 }}>
+                            Welcome, {session?.email?.split("@")[0] ?? "user"}
+                        </Typography>
+                        <WavingHandIcon color="inherit" sx={{ fontSize: 32 }} />
+                    </Stack>
+
                     <Typography variant="body2" color="text.secondary">
                         Last login: {session ? new Date(session.lastLogin).toLocaleString() : "—"}
                     </Typography>
